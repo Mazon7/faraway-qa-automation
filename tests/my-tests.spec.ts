@@ -43,7 +43,7 @@ test("Login with email", async ({ page, context }) => {
 // Resend email and check that code works
 */
 
-test.only("Purchase Item", async ({ page }) => {
+test("Purchase Item", async ({ page }) => {
   // TODO: Setup MetaMask and get the browser context before the test starts
   
   const mainPage = new MainPage(page);
@@ -104,7 +104,7 @@ test.only("Purchase Item", async ({ page }) => {
 });
 
 
-test("Check Metamask Extention", async ({ page }) => {
+test.skip("Check Metamask Extention", async ({ page }) => {
   await page.goto(`chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/popup.html`);
   await page.waitForTimeout(30000) // this is here so that it won't automatically close the browser window
 })
