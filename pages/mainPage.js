@@ -18,7 +18,7 @@ exports.MainPage = class MainPage {
     await this.page.waitForEvent("popup");
   }
 
-  async openNewTab() {
+  async openPage() {
     await this.page.goto(this.mainUrl);
     await this.page.waitForLoadState();
   }

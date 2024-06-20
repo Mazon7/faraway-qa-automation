@@ -1,19 +1,19 @@
 // @ts-check
-const { test, expect } = require("@playwright/test");
-// import { test, expect } from '../pages/metamaskSetup';
+// const { test, expect } = require("@playwright/test");
+import { test, expect } from '../pages/metamaskSetup';
 
-const { MainPage } = require("../pages/MainPage");
+const { MainPage } = require("../pages/mainPage");
 const { LoginPage } = require("../pages/LoginPage");
 
 // test.describe.configure({ retries: 2, timeout: 20_000 });
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page}) => {
   const mainPage = new MainPage(page);
 
   console.log(`Running ${test.info().title}`);
 
   // Runs before each test and open main demo page.
-  await mainPage.openNewTab();
+  await mainPage.openPage();
 });
 
 test("Login with email", async ({ page, context }) => {
@@ -87,9 +87,8 @@ test("Purchase Item", async ({ page }) => {
   // Connect any Wallet (browser extension) to pay with (Metamask, Phantom or Coinbase)
 
   // Choose Metamask
-  const child = await iframe.getByAltText("MetaMask")
-  const parent = await iframe.locator("css=[div]").filter({ has: child });
-  await parent.click()
+  await iframe.getByAltText("MetaMask").click()
+  await page.waitForTimeout(30000) // this is here so that it won't automatically close the browser window
 
   // Wait for MetaMask extension to load and navigate to it
   // await page.waitForTimeout(5000); // Wait a bit for the extension to load
@@ -104,7 +103,46 @@ test("Purchase Item", async ({ page }) => {
 });
 
 
-test.skip("Check Metamask Extention", async ({ page }) => {
-  await page.goto(`chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/popup.html`);
+test("Check Metamask Extention", async ({ page, extensionId }) => {
+  await page.goto(`chrome-extension://${extensionId}}/popup.html`);
+  // chrome-extension://cldkbecclblpfiebjakimklejjepiaef/home.html#onboarding/welcome
   await page.waitForTimeout(30000) // this is here so that it won't automatically close the browser window
+
+
+  // welcome - URL in the page
+
+  // data-testid="onboarding-terms-checkbox"
+  // data-testid="onboarding-import-wallet"
+  
+  
+  // metametrics - URL in the page
+  // data-testid="metametrics-i-agree"
+
+
+  // import-with-recovery-phrase - URL in the page
+
+  // await mainPage.blockchain.selectOption({ value: "n" }); n - number of words
+  // data-testid="import-srp__srp-word-n" n - number of input (n-1)
+  // data-testid="import-srp-confirm" - check that enabled and click it
+
+
+  // create-password  - URL in page
+
+  // data-testid="create-password-new"
+  // data-testid="create-password-confirm"
+  // data-testid="create-password-terms"
+  // data-testid="create-password-import" - check that enabled and click it
+
+
+  // completion - URL in page
+  // data-testid="onboarding-complete-done" - check enabled and click it
+
+
+  // pin-extension - URL in page
+  // data-testid="pin-extension-next"
+  // data-testid="pin-extension-done"
+
+  // Popup
+  // buttonn with text Enable
+
 })
